@@ -377,7 +377,7 @@ function renderRankings(courtRankings, isAutoScroll = true) {
         const btnHtml = `
             <div class="action-btn-wrapper">
                 <button id="add-finals-btn" class="btn btn-primary" style="background-color: var(--main-pink); box-shadow: 0 4px 12px rgba(255, 71, 126, 0.4);">
-                    🔥 各コート上位チームによる決定戦を追加する
+                    🔥 各コート上位チームによる<br class="sp-br">決定戦を追加する
                 </button>
             </div>`;
         rankingContainer.insertAdjacentHTML('beforeend', btnHtml);
