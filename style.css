@@ -1,0 +1,837 @@
+/* ==========================================================================
+   1. 全体設定 & カラー変数（ピンクとポップな世界観）
+   ========================================================================== */
+:root {
+    --main-pink: #ff477e;
+    /* 元気なマゼンタピンク */
+    --light-pink: #ffccd5;
+    /* 薄いピンク（背景やアクセント用） */
+    --accent-orange: #ff85a1;
+    /* ボタンなどのホバー用 */
+    --court-floor: #ff9f1c;
+    /* コートの床をイメージしたポップなオレンジ */
+    --text-dark: #2b2d42;
+    /* 読みやすい濃いグレー */
+    --bg-cream: #fff5f5;
+    /* ほんのりピンクがかった可愛い白背景 */
+    --white: #ffffff;
+    --radius-sm: 8px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+    --shadow: 0 8px 16px rgba(255, 71, 126, 0.15);
+    /* ピンクがかった柔らかい影 */
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    /* 丸ゴシックで可愛い印象に */
+    background-color: var(--bg-cream);
+    color: var(--text-dark);
+    line-height: 1.6;
+    padding-bottom: 60px;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* ==========================================================================
+   2. ヘッダー & 共通コンポーネント
+   ========================================================================== */
+header {
+    background: linear-gradient(135deg, var(--main-pink), #ff7096);
+    color: var(--white);
+    text-align: center;
+    padding: 30px 20px;
+    border-bottom-left-radius: var(--radius-lg);
+    border-bottom-right-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+    margin-bottom: 30px;
+}
+
+header h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+/* ぷっくりしたカード型の背景 */
+.bg-card {
+    background-color: var(--white);
+    border-radius: var(--radius-md);
+    padding: 25px;
+    margin-bottom: 25px;
+    box-shadow: var(--shadow);
+    border: 2px solid var(--light-pink);
+}
+
+.bg-card h2 {
+    font-size: 1.3rem;
+    color: var(--main-pink);
+    margin-bottom: 20px;
+    border-bottom: 3px dashed var(--light-pink);
+    padding-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* ==========================================================================
+   3. ボタン & フォーム要素
+   ========================================================================== */
+.btn {
+    font-family: inherit;
+    font-weight: 700;
+    padding: 10px 20px;
+    border: none;
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 0 rgba(0, 0, 0, 0.1);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn:active {
+    transform: translateY(4px);
+    box-shadow: none;
+}
+
+.btn-primary {
+    background-color: var(--main-pink);
+    color: var(--white);
+}
+
+.btn-primary:hover {
+    background-color: var(--accent-orange);
+}
+
+.btn-generate {
+    background: linear-gradient(135deg, #ff9f1c, #ffbf69);
+    /* 輝くオレンジ */
+    color: var(--white);
+    font-size: 1.1rem;
+    padding: 15px 40px;
+}
+
+.btn-secondary {
+    /* background-color: #4ea8de; */
+    background-color: #ff477e;
+    color: var(--white);
+}
+
+input[type="number"],
+input[type="text"],
+select {
+    font-family: inherit;
+    padding: 8px 12px;
+    border: 2px solid var(--light-pink);
+    border-radius: var(--radius-sm);
+    color: var(--text-dark);
+    font-size: 1rem;
+    outline: none;
+}
+
+input:focus,
+select:focus {
+    border-color: var(--main-pink);
+}
+
+/* 横並びの設定欄 */
+.form-group-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+}
+
+/* チーム入力フォーム */
+#team-form {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+#team-name-input {
+    flex-grow: 1;
+}
+
+.action-area {
+    text-align: center;
+    margin-top: 30px;
+}
+
+/* ==========================================================================
+   大会名入力欄のカスタムスタイル
+   ========================================================================== */
+.tournament-name-group {
+    flex: 2;
+    min-width: 200px;
+    white-space: nowrap;
+    /* 大会名のラベルテキストを絶対に折り返さない */
+}
+
+.tournament-name-group input {
+    width: 100%;
+}
+
+/* ==========================================================================
+   4. チーム一覧（ドラッグ対応を見据えたデザイン）
+   ========================================================================== */
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 15px;
+}
+
+.team-item {
+    background-color: var(--bg-cream);
+    border: 2px solid var(--light-pink);
+    border-radius: var(--radius-md);
+    /* ぷっくり感をアップ */
+    padding: 15px;
+    text-align: center;
+    font-weight: 700;
+    cursor: grab;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+}
+
+.team-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* チームアイテム内のヘッダー調整（名前と削除ボタンの並び） */
+.team-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+}
+
+.team-item-name {
+    flex-grow: 1;
+    text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* 🌟 追加：削除ボタンのデザイン（小さくてぷっくりしたピンク丸） */
+.delete-team-btn {
+    background-color: #ffccd5;
+    color: #ff477e;
+    border: none;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s ease;
+    flex-shrink: 0;
+}
+
+.delete-team-btn:hover {
+    background-color: #ff477e;
+    color: var(--white);
+    transform: scale(1.1);
+}
+
+/* ==========================================================================
+   5. 試合スケジュール ＆ コート別カラム
+   ========================================================================== */
+.match-round-block {
+    margin-bottom: 35px;
+    background: #fff;
+    border-radius: var(--radius-md);
+    padding: 20px;
+    border-left: 8px solid var(--main-pink);
+    box-shadow: var(--shadow);
+}
+
+.round-title {
+    font-size: 1.2rem;
+    color: var(--main-pink);
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+
+/* コートが複数ある場合に横並び・折り返しにする魔法のグリッド */
+.court-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+/* 3面以上ある場合、画面幅が広ければ3カラム、狭ければ自動で折り返し */
+@media (min-width: 992px) {
+    .court-grid.triple-court {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .court-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* 試合カード（個別コート） */
+.match-card {
+    background-color: var(--white);
+    border: 3px solid var(--court-floor);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.court-badge {
+    background-color: var(--court-floor);
+    color: var(--white);
+    padding: 6px 12px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    display: inline-block;
+    border-bottom-right-radius: var(--radius-sm);
+}
+
+.match-content {
+    padding: 15px;
+    text-align: center;
+}
+
+/* ==========================================================================
+   得点入力欄 ＆ 👑アニメーション対応
+   ========================================================================== */
+.vs-row {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin: 5px 0 10px 0;
+    /* 王冠配置のためマージン調整 */
+}
+
+/* チーム名と王冠を縦に並べるためのラッパー */
+.team-name-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 42%;
+    position: relative;
+}
+
+/* 👑マークの初期状態：透明で少し上に浮いている */
+.crown-icon {
+    color: #ffd166;
+    font-size: 1.5rem;
+    line-height: 1;
+    margin-bottom: 2px;
+    height: 1.5rem;
+    display: block;
+    opacity: 0;
+    transform: translateY(-8px);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    /* ぷるんと登場 */
+}
+
+/* 🌟 修正：「has-crown」がついたら、チーム名の上に綺麗に出現 */
+.team-name-wrapper.has-crown .crown-icon {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.team-name-display {
+    width: 100%;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* セットごとの入力行（🌟修正：1, 2, 3セットを完全均等幅にする構造） */
+.set-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    position: relative;
+    padding: 0 40px;
+    /* 両端に余白を完全に固定し、中央エリアの幅を一律にする */
+}
+
+.set-row:last-child {
+    margin-bottom: 0;
+}
+
+/* セット名のラベル幅を固定 */
+.set-label {
+    font-size: 0.85rem;
+    font-weight: 700;
+    white-space: nowrap;
+    width: 60px;
+    text-align: left;
+}
+
+/* スコア入力ボックスのラッパー（常に中央に均等に配置される） */
+.score-input-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    flex-grow: 1;
+}
+
+.score-input-area input[type="number"] {
+    width: 55px;
+    text-align: center;
+    padding: 6px;
+}
+
+/* ➕ プラスの可愛い丸ボタン（絶対配置で他の要素の幅を一切邪魔しない） */
+.add-set-btn-round {
+    position: absolute;
+    right: 0;
+    /* パディング余白の右端ぴったりに配置 */
+    background-color: var(--main-pink);
+    color: var(--white);
+    border: none;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    font-size: 1.1rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 0;
+    box-shadow: 0 2px 4px rgba(255, 71, 126, 0.3);
+}
+
+.add-set-btn-round:hover {
+    background-color: var(--accent-orange);
+    transform: scale(1.1);
+}
+
+.score-toggle-btn {
+    background: none;
+    border: none;
+    color: var(--main-pink);
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 0.9rem;
+    margin-top: 10px;
+    outline: none;
+}
+
+.score-input-area {
+    background-color: var(--bg-cream);
+    padding: 15px;
+    border-top: 2px dashed var(--light-pink);
+    margin-top: 10px;
+    border-radius: var(--radius-sm);
+}
+
+.referee-text {
+    font-size: 0.85rem;
+    color: #6c757d;
+    margin-top: 2px;
+}
+
+.set-count-summary {
+    margin-top: 15px;
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: var(--main-pink);
+    background-color: var(--light-pink);
+    padding: 4px;
+    border-radius: var(--radius-sm);
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* ==========================================================================
+   ランキング・最終結果セクション（追加分）
+   ========================================================================== */
+
+/* 順位表・最終結果のタイトル */
+.ranking-court-title {
+    color: var(--court-floor);
+    margin: 25px 0 10px 0;
+    font-size: 1.4rem;
+}
+
+.final-result-title {
+    color: var(--main-pink);
+    margin: 30px 0 10px 0;
+    font-size: 1.5rem;
+}
+
+/* 共通テーブルスタイル */
+.ranking-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    background: var(--white);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* 最終結果テーブル専用の太枠 */
+.ranking-table.final-table {
+    border: 2px solid var(--main-pink);
+}
+
+/* ヘッダー */
+.ranking-table th {
+    background-color: var(--main-pink);
+    color: var(--white);
+    padding: 12px;
+    font-weight: 700;
+}
+
+/* セル共通 */
+.ranking-table td {
+    padding: 12px 10px;
+    border-bottom: 1px solid var(--light-pink);
+    color: var(--text-dark);
+}
+
+/* テキスト配置用クラス */
+.text-center {
+    text-align: center;
+}
+
+.text-left {
+    text-align: left;
+}
+
+/* 最終結果の順位セル（1位〜4位の背景） */
+.rank-badge-cell {
+    font-weight: bold;
+    background-color: var(--bg-cream);
+    width: 25%;
+}
+
+/* 最終結果のチーム名セル */
+.final-team-cell {
+    font-size: 1.05rem;
+}
+
+/* 決定戦追加ボタンのラッパー */
+.action-btn-wrapper {
+    text-align: center;
+    margin: 30px 0;
+}
+
+/* ==========================================================================
+   試合スケジュール：コートフィルターのズレ修正
+   ========================================================================== */
+.filter-group {
+    display: flex;
+    align-items: center;
+    /* 縦方向の中央揃え */
+    gap: 8px;
+    /* ラベルとセレクトボックスの間の余白 */
+    margin-bottom: 20px;
+}
+
+.filter-group label {
+    font-weight: 700;
+    color: var(--text-dark);
+    white-space: nowrap;
+    /* 折り返しを防止 */
+}
+
+.filter-group select {
+    padding: 6px 12px;
+    border: 2px solid var(--light-pink);
+    border-radius: var(--radius-sm);
+    background-color: var(--white);
+    font-family: inherit;
+    font-size: 0.95rem;
+    color: var(--text-dark);
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+.filter-group select:focus {
+    border-color: var(--main-pink);
+}
+
+/* ==========================================================================
+   📱 スマートフォン版 レスポンシブ設定（768px以下）
+   ========================================================================== */
+@media screen and (max-width: 768px) {
+
+    /* 全体コンテナの余白を縮小 */
+    .container {
+        padding: 10px;
+    }
+
+    /* タイトル文字を少し小さく */
+    header h1 {
+        font-size: 1.5rem;
+        padding: 15px 10px;
+    }
+
+    h2 {
+        font-size: 1.15rem;
+    }
+
+    /* 設定エリアの入力欄を縦並びに */
+    .form-group-row {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .form-group {
+        width: 100%;
+    }
+
+    /* 2. チーム登録フォームの調整 */
+    #team-form {
+        flex-direction: row;
+        /* テキストとボタンは横並びをキープ */
+        gap: 6px;
+    }
+
+    #team-name-input {
+        flex-grow: 1;
+        font-size: 0.95rem;
+    }
+
+    /* 💡 スマホのときだけ「チームを追加」の文字を「追加」に変更するCSSトリック */
+    #add-team-btn {
+        padding: 10px 14px;
+        font-size: 0.95rem;
+        white-space: nowrap;
+    }
+
+    #add-team-btn::before {
+        content: "追加";
+    }
+
+    #add-team-btn span {
+        display: none;
+        /* JS側でspanを囲む修正を行います */
+    }
+
+    /* 3. 試合スケジュールヘッダー（表示コートフィルターのスマホ対応） */
+    .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .filter-group {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    /* ⚠️ 【得点入力欄の崩れ修正】 
+       スマホの狭い画面幅でも枠外に飛び出さないよう、パディングと幅を再計算します */
+    .set-row {
+        padding: 0 30px 0 0;
+        /* 右側のプラスボタン用スペースだけ確保し、左は詰める */
+        gap: 5px;
+    }
+
+    .set-label {
+        width: auto;
+        min-width: 50px;
+        font-size: 0.8rem;
+    }
+
+    .score-input-wrapper {
+        gap: 4px;
+    }
+
+    .score-input-wrapper input[type="number"] {
+        width: 48px;
+        /* 入力欄を少しだけコンパクトにして収める */
+        padding: 5px;
+        font-size: 0.95rem;
+    }
+
+    .add-set-btn-round {
+        right: -5px;
+        /* プラスボタンの位置をスマホ用に微調整 */
+    }
+
+    .match-teams-area {
+        font-size: 0.95rem;
+        /* チーム名の文字サイズを調整 */
+    }
+
+    /* .score-input-area {
+        padding: 10px;
+    } */
+}
+
+/* スマホ限定の改行コード用（デフォルトは非表示、スマホ画面のみ有効化） */
+.sp-br {
+    display: none;
+}
+
+@media screen and (max-width: 768px) {
+    .sp-br {
+        display: inline;
+    }
+}
+
+/* ==========================================================================
+   大会データ保存・管理エリアのレスポンシブスタイル
+   ========================================================================== */
+.storage-controls-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 15px;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.storage-action-block {
+    flex-shrink: 0;
+}
+
+/* パソコン表示時の縦の区切り線 */
+.storage-divider {
+    width: 2px;
+    height: 30px;
+    background-color: var(--light-pink);
+}
+
+.storage-select-block {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-grow: 1;
+}
+
+.storage-select-block label {
+    margin: 0;
+    white-space: nowrap;
+}
+
+.select-buttons-inline {
+    display: flex;
+    gap: 8px;
+    flex-grow: 1;
+    width: 100%;
+}
+
+/* 各パーツのサイズ・装飾調整 */
+.storage-controls-wrapper select {
+    padding: 8px;
+    border: 1px solid var(--light-pink);
+    border-radius: var(--radius-sm);
+    flex-grow: 1;
+    min-width: 150px;
+    max-width: 300px;
+    font-family: inherit;
+}
+
+.storage-controls-wrapper .btn {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+/* 読込ボタンのカスタムカラー */
+.storage-controls-wrapper #load-data-btn {
+    background-color: #4ea8de;
+}
+
+/* 削除ボタン（危険・警告色） */
+.storage-controls-wrapper .btn-danger {
+    background-color: #e63946;
+    color: white;
+}
+
+/* 📱 スマホ対応（画面幅768px以下） */
+@media (max-width: 768px) {
+    .storage-controls-wrapper {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+    }
+
+    .storage-action-block .btn {
+        width: 100%;
+        /* 保存ボタンを横いっぱいに */
+        padding: 10px;
+    }
+
+    /* スマホ時は区切り線を横線に変更 */
+    .storage-divider {
+        width: 100%;
+        height: 1px;
+        background-color: var(--light-pink);
+        margin: 2px 0;
+    }
+
+    .storage-select-block {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+        width: 100%;
+    }
+
+    /* 読込・削除ボタンを押しやすいように2列のグリッド配置にする */
+    .select-buttons-inline {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas:
+            "select select"
+            "load delete";
+        gap: 8px;
+        width: 100%;
+    }
+
+    #saved-tournaments-select {
+        grid-area: select;
+        max-width: 100%;
+        width: 100%;
+        padding: 10px;
+    }
+
+    #load-data-btn {
+        grid-area: load;
+        padding: 10px;
+    }
+
+    #delete-data-btn {
+        grid-area: delete;
+        padding: 10px;
+    }
+}

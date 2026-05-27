@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>バレーボール試合組み合わせツール</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS_Rounded_1c:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header>
+        <h1>🏐 バレーボール<br class="sp-br">試合組み合わせツール</h1>
+    </header>
+
+    <main class="container">
+        <section class="setup-section bg-card">
+            <h2>1. 大会の基本設定</h2>
+            <div class="form-group-row">
+                <div class="form-group tournament-name-group">
+                    <label for="tournament-name">大会名</label>
+                    <input type="text" id="tournament-name" placeholder="例: 第1回 社内バレー大会">
+                </div>
+
+                <div class="form-group">
+                    <label for="court-count">コート数</label>
+                    <input type="number" id="court-count" min="1" max="2" value="2"> 面
+                </div>
+            </div>
+        </section>
+
+        <section class="team-section bg-card">
+            <h2>2. 参加チームの登録</h2>
+            <form id="team-form" onsubmit="return false;">
+                <input type="text" id="team-name-input" placeholder="チーム名を入力してください" required>
+                <button type="button" id="add-team-btn" class="btn btn-primary"><span>チームを追加</span></button>
+            </form>
+
+            <div id="team-list-container" class="team-grid">
+            </div>
+
+            <div class="action-area">
+                <button id="generate-schedule-btn" class="btn btn-generate">✨ 大会スケジュールを<br class="sp-br">作成する</button>
+            </div>
+        </section>
+
+        <section id="schedule-section" class="schedule-section bg-card hidden">
+            <div class="section-header">
+                <h2>3. 試合スケジュール</h2>
+                <div class="filter-group">
+                    <label for="court-filter">表示コート:</label>
+                    <select id="court-filter">
+                        <option value="all">すべて表示</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="timetable-container">
+            </div>
+
+            <div id="ranking-action-area" class="ranking-action-area hidden">
+                <button id="calc-ranking-btn" class="btn btn-secondary">📊 得失点・順位を計算する</button>
+            </div>
+
+            <div id="ranking-container">
+            </div>
+        </section>
+    </main>
+
+    <script src="logic.js"></script>
+    <script src="ui.js"></script>
+    <script src="storage.js"></script>
+</body>
+
+</html>
