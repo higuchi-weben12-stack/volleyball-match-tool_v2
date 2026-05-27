@@ -864,4 +864,12 @@ select:focus {
         grid-area: delete;
         padding: 10px;
     }
+
+    .text-left {
+        width: 25%;
+    }
+
+    .rank-badge-cell {
+        width: 10%;
+    }
 }
