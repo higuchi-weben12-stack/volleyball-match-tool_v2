@@ -708,77 +708,98 @@ select:focus {
 }
 
 /* ==========================================================================
-   大会データ保存・管理エリアのレスポンシブスタイル
+   大会データ保存・管理エリアのレイアウト完全修正（上下2段・完璧レスポンシブ）
    ========================================================================== */
+.storage-management-section {
+    display: block;
+    /* 縦並びのブロック構造にする */
+    width: 100%;
+}
+
+/* メインタイトルラベル：常にボタンの上段に横1行で綺麗に配置 */
+.storage-main-title {
+    display: block !important;
+    font-weight: bold;
+    color: var(--main-pink);
+    margin-bottom: 15px;
+    white-space: nowrap;
+}
+
+/* ボタンやパーツを囲む下段のコンテナ（PC表示時は横にスマートに並べる） */
 .storage-controls-wrapper {
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: flex-start;
     gap: 15px;
-    margin-top: 10px;
     width: 100%;
 }
 
-.storage-action-block {
+/* 各機能ブロック */
+.storage-action-block,
+.storage-file-block {
+    display: flex;
+    gap: 8px;
     flex-shrink: 0;
 }
 
-/* パソコン表示時の縦の区切り線 */
+/* PC表示時の縦の区切り線 */
 .storage-divider {
     width: 2px;
-    height: 30px;
+    height: 28px;
     background-color: var(--light-pink);
+    flex-shrink: 0;
 }
 
+/* 中央のブラウザ読込・削除エリア */
 .storage-select-block {
     display: flex;
     align-items: center;
-    gap: 10px;
-    flex-grow: 1;
+    gap: 8px;
+    flex-shrink: 0;
 }
 
 .storage-select-block label {
     margin: 0;
     white-space: nowrap;
+    font-size: 0.9rem;
+    color: var(--text-dark);
 }
 
 .select-buttons-inline {
     display: flex;
     gap: 8px;
-    flex-grow: 1;
-    width: 100%;
 }
 
-/* 各パーツのサイズ・装飾調整 */
+/* 各パーツのサイズ・装飾調整（コンテンツ幅から絶対にはみ出さない） */
 .storage-controls-wrapper select {
     padding: 8px;
     border: 1px solid var(--light-pink);
     border-radius: var(--radius-sm);
-    flex-grow: 1;
     min-width: 150px;
-    max-width: 300px;
+    max-width: 220px;
     font-family: inherit;
+    color: var(--text-dark);
 }
 
 .storage-controls-wrapper .btn {
-    padding: 8px 16px;
-    font-size: 0.9rem;
+    padding: 8px 14px;
+    font-size: 0.85rem;
     white-space: nowrap;
     cursor: pointer;
 }
 
-/* 読込ボタンのカスタムカラー */
+/* ボタンのカスタムカラー */
 .storage-controls-wrapper #load-data-btn {
     background-color: #4ea8de;
 }
 
-/* 削除ボタン（危険・警告色） */
 .storage-controls-wrapper .btn-danger {
     background-color: #e63946;
     color: white;
 }
 
-/* 📱 スマホ対応（画面幅768px以下） */
+/* 📱 スマホ対応（画面幅768px以下）：はみ出しを完全に防ぐブロック化 */
 @media (max-width: 768px) {
     .storage-controls-wrapper {
         flex-direction: column;
@@ -786,13 +807,22 @@ select:focus {
         gap: 12px;
     }
 
-    .storage-action-block .btn {
+    /* スマホ時はボタンをすべて横幅100%いっぱいに広げる */
+    .storage-action-block .btn,
+    .storage-file-block .btn {
         width: 100%;
-        /* 保存ボタンを横いっぱいに */
         padding: 10px;
     }
 
-    /* スマホ時は区切り線を横線に変更 */
+    /* スマホ時のファイル操作（2ボタンを左右50%ずつ綺麗に並べる） */
+    .storage-file-block {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr;
+        width: 100%;
+        gap: 8px;
+    }
+
+    /* スマホ時は区切り線を「横線」に変更して区切る */
     .storage-divider {
         width: 100%;
         height: 1px;
@@ -807,7 +837,7 @@ select:focus {
         width: 100%;
     }
 
-    /* 読込・削除ボタンを押しやすいように2列のグリッド配置にする */
+    /* スマホ時のセレクトボックス＋読込・削除（グリッドで押しやすく配置） */
     .select-buttons-inline {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -820,7 +850,7 @@ select:focus {
 
     #saved-tournaments-select {
         grid-area: select;
-        max-width: 100%;
+        max-width: 100% !important;
         width: 100%;
         padding: 10px;
     }
